@@ -92,45 +92,6 @@ namespace IDNameObjects
             return set.DefaultWhere(ids).DefaultOrder();
         }
 
-/*
-        public static IQueryable<TEntity> DefaultWhere2<TEntity>(this IQueryable<TEntity> set, string search = null)
-            where TEntity : class
-        {
-            return IDNameObjectManager<TEntity>._where(set, (search == null) ? null : IDNameObjectManager<TEntity>.GetNameSearchPredicate(search));
-        }
-
-        public static IQueryable<TEntity> DefaultWhere2<TEntity>(this IQueryable<TEntity> set, IList ids)
-            where TEntity : class
-        {
-            return IDNameObjectManager<TEntity>._where(set, IDNameObjectManager<TEntity>.GetIDsInListPredicate(ids));
-        }
-
-        public static IOrderedQueryable<TEntity> DefaultOrder2<TEntity>(this IQueryable<TEntity> set)
-            where TEntity : class
-        {
-            return IDNameObjectManager<TEntity>._defaultOrderBy(set);
-        }
-
-        public static IOrderedQueryable<TEntity> DefaultWhereOrder2<TEntity>(this IQueryable<TEntity> set, string search = null)
-            where TEntity : class
-        {
-            var q = set;
-            if (!(q is IOrderedQueryable<TEntity>)) q = q.DefaultOrder2();
-            q = q.DefaultWhere2(search);
-            return q as IOrderedQueryable<TEntity>;
-        }
-
-        public static IOrderedQueryable<TEntity> DefaultWhereOrder2<TEntity>(this IQueryable<TEntity> set, IList ids)
-            where TEntity : class
-        {
-            var q = set;
-            if (!(q is IOrderedQueryable<TEntity>)) q = q.DefaultOrder2();
-            q = q.DefaultWhere2(ids);
-            return q as IOrderedQueryable<TEntity>;
-        }
-*/
-
-
         public static int DefaultCount<TEntity>(this IQueryable<TEntity> set, string search = null)
             where TEntity : class
         {
@@ -162,39 +123,16 @@ namespace IDNameObjects
             if (pageSize <= 0) pageSize = IDNameObjectManager<TEntity>.GetDefaultPageSize();
             return set.Skip((pageNumber - 1) * pageSize).Take(pageSize);
         }
-/*
-        public static IQueryable<TEntity> Page2<TEntity>(this IOrderedQueryable<TEntity> set, int pageNumber, int pageSize = 0)
-            where TEntity : class
-        {
-            if (pageNumber <= 0) return set;
-            if (pageSize <= 0) pageSize = IDNameObjectManager<TEntity>.GetDefaultPageSize();
-            return set.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-        }
-*/
+
         public static IQueryable<SimpleIDNameObject> AsSimpleINOs<TEntity>(this IQueryable<TEntity> set)
             where TEntity : class
         {
             return IDNameObjectManager<TEntity>.ApplySelectAsSimpleINOs(set);
         }
 
-/*
-        public static IQueryable<TEntity> QuickQuery2<TEntity>(this IQueryable<TEntity> set, string search, int pageNumber, int pageSize)
-            where TEntity : class
-        {
-            return set.DefaultWhereOrder2(search).Page(pageNumber, pageSize);
-        }
-*/
-
-
-
         public static IQueryable<TEntity> QuickQuery<TEntity>(this IQueryable<TEntity> set, string search, int pageNumber, int pageSize, Expression<Func<TEntity, dynamic>> customOrderBySelector = null)
             where TEntity : class
         {
-/*
-            return (customOrderBySelector == null)
-                ? set.DefaultWhereOrder(search).Page(pageNumber, pageSize)
-                : IDNameObjectManager<TEntity>._orderby(set.DefaultWhere(search), (Expression)customOrderBySelector).Page(pageNumber, pageSize);
-*/
             return (customOrderBySelector == null)
                 ? set.DefaultWhereOrder(search).Page(pageNumber, pageSize)
                 : IDNameObjectManager<TEntity>.ApplyOrderBy(set.DefaultWhere(search), customOrderBySelector).Page(pageNumber, pageSize);
@@ -215,11 +153,6 @@ namespace IDNameObjects
         public static IQueryable<TEntity> QuickQuery<TEntity>(this IQueryable<TEntity> set, IList ids, Expression<Func<TEntity, object>> customOrderBySelector = null)
             where TEntity : class
         {
-            /*
-                        return (customOrderBySelector == null)
-                            ? set.DefaultWhereOrder(ids)
-                            : IDNameObjectManager<TEntity>._orderby(set.DefaultWhere(ids), (Expression)customOrderBySelector);
-            */
             return (customOrderBySelector == null)
                 ? set.DefaultWhereOrder(ids)
                 : IDNameObjectManager<TEntity>.ApplyOrderBy(set.DefaultWhere(ids), customOrderBySelector);
