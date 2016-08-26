@@ -384,7 +384,7 @@ Well, maybe you won't use these much, but note that you can use them along with 
 
 ### Optimization
 
-In some cases, you don't really need to fetch from the DB all the model's data. Let's remember our select lists: what they really need to work properly is ID+Name pairs. Well, that's not exactly true: when your model consists of composite Name property you ought to retreive more data. But in simple cases, it is.
+In some cases, you don't really need to fetch from the DB all the model's data. Let's remember our select lists: what they really need to work properly is ID+Name pairs. Well, that's not exactly true: when your model consists of composite Name property you ought to retrieve more data. But in simple cases, it is.
 
 Actually, methods like ToSelect2PageResult, ToSelectList and ToMultiSelectList automatically retrieve only required minimum (i.e. ID+Name) if it is possible, so here you don't have to bother. But if you want, you could also use methods like AsSimpleINOs() and QuickSimpleINOQuery(). They work with SimpleIDNameObject class that consists of only two properties: ID and Name. With their help, you could optimize DB load a little.
 
@@ -400,7 +400,7 @@ Almost forgot: for many of previously mentioned methods there is an asyncronous 
 
 ## Where it could be used additionally
 
-I think it could work pretty well with Windows lists controls, but I don't know of any that support partial data retreiving. If there are, I am sure I could write an additional IDNameObjects Windows API.
+I think it could work pretty well with Windows lists controls, but I don't know of any that support partial data retrieving. If there are, I am sure I could write an additional IDNameObjects Windows API.
 
 I also succesfully used it with <a href="https://github.com/martijnboland/MvcPaging">Martijn Boland's Mvc.Paging tool</a> (this paginator doesn't require loading all the data from the DB, which is good).
 
