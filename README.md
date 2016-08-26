@@ -6,7 +6,7 @@ When you work with something like drop-down list, in most cases, all you actuall
 
 Let's start from the end. If you are web developer you probably know that sometimes you shouldn't populate select-list with all the possible values, because there are a lot of them. To create a list with several thousands items when the user needs to choose only one means an excessive traffic and an excessive load on the database. The typical solution: to retrieve data partially, on demand. For example, user could start to type a name of the item and the web page automatically sends the ajax-request and gets some filtered data. The better solution is to break this filtered data on "pages": when the user scrolls list of already retrieved items to the end the web page automatically requests the next portion of data.
 
-When we talk about JQuery, all this could be achieved with the help of the <a href="https://select2.github.io/">Select2</a>. On the server side, you should create a proper query to get the data requested, convert it to Select2-format and return the result.
+When we talk about JQuery, all this could be achieved with the help of the <a href="https://select2.github.io/">Select2</a>. On the server side, you should create a proper query to get the data requested, convert it to Select2-format and return the result. You could refer to <a href="http://www.codeproject.com/Articles/623566/Select-The-Ultimate-jQuery-Autocomplete">this article</a> for an example.
 
 Consider the following simple model.
 
@@ -81,9 +81,9 @@ You can do even this:
 
 Note, that there is a support for IDNameObjectProperty("ID") attribute, but since we use Entity Framework and, in this case, we have to use Key attribute, that would be excessive.
 
-Note also, that type of the [ID] property is string in the latter example, not an int. IDNameObjects API supports both (and, maybe, others as well - who knows). The [Name] property is always considered as a string, though.
+Note also, that type of the [ID] property is string in the latter example, not an int. IDNameObjects API supports both (and, maybe, others as well - who knows). The [Name] property is always considered a string, though.
 
-And one more word, just to close the issue: IDNameObjects API would recognize an identificator named like BookID. But right now there is no support for such a naming for derived classes.
+And one more word, just to close the issue: IDNameObjects API would recognize an identificator named like BookID. But right now there is no support for such a naming for derived classes (but you could use an attribute to deal with it).
 
 ## Making select lists
 
@@ -232,7 +232,7 @@ Another default filtering is applied to IList of [ID] property values. Naturally
 
 - IList object consists of only one item (it would generate a simple equality expression, which, in my opinion, is preferable than IN operator).
 
-But you have an option to change this behaviour manually adding to your model a proper method like this:
+But you have an option to change this behaviour manually by adding to your model a proper method like this:
 
     [IDNameObjectMethod("IDsInListPredicate")]
     public static Expression<Func<T, bool>> SomeOtherMethod<T>(IList<int> ids)
@@ -282,7 +282,7 @@ What do we do? Well, you already know how to customize default behaviour, so thi
         return p => p.LastName + " " + p.FirstName + " " + (p.MiddleName ?? "");
     }
 
-The real pain in err... that important part of every developer's body is composite name filtering. It is hard enough to write a String.Contains() analog that works with several strings you aren't permitted to concatenate - even without all the LINQ limitations.
+The real pain in err... that important part of every developer's body is composite name filtering. It is hard enough to write a String.Contains() analogue that works with several strings you aren't permitted to concatenate - even without all the LINQ limitations.
 
 The alternate solution is to forse EF to create a calculated field (column), so the IDNameObjects API could use it on a DB level. There is a <a href="http://www.davepaquette.com/archive/2012/09/23/calculated-columns-in-entity-framework-code-first-migrations.aspx">little article</a> on how to achieve this.
 
@@ -370,7 +370,7 @@ Well, it seems we didn't gain very much with IDNameObjects API in this example, 
 
 #### Special filtering
 
-- WhereID(bookID) - analog of Where(b => b.ID == bookID)
+- WhereID(bookID) - analogue of Where(b => b.ID == bookID)
 
 - WhereIDsIn(ids) - that's a DefaultWhere(ids) actually
 
